@@ -33,6 +33,10 @@ export default {
     try {
       const url = `${rpcAddress}api/rpc_call?key=${key}`
       const response = await axios.post(url, inputValue)
+      if (response.data === null) {
+        return
+      }
+
       if (typeof response.data === 'object') {
         if ('Ok' in response.data) {
           return response.data.Ok
@@ -48,6 +52,10 @@ export default {
       console.error(error)
       throw error
     }
+  },
+
+  getFileUrl (keyPath) {
+    return `${rpcAddress}get_file/${keyPath}`
   },
 
   handleCmd (name, args) {
