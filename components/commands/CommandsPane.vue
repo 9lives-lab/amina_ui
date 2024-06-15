@@ -1,25 +1,20 @@
 <template>
-  <div class="row q-pa-sm">
-    <AminaPlate class="col-3 q-mr-sm">
-      <TitledPane title="List">
-        <CommandsListPane @commandSelected="selectCommand" />
-      </TitledPane>
-    </AminaPlate>
-    <div class="col column q-gutter-sm">
-      <AminaPlate class="col-3">
+  <div class="row q-pa-md">
+    <WidgetPane class="col-3 q-mr-md" title="List">
+      <CommandsListPane @commandSelected="selectCommand" />
+    </WidgetPane>
+    <div class="col column q-gutter-md">
+      <WidgetPane class="col-3">
         <RunCommandPane :cmdName="selectedCmdName" />
-      </AminaPlate>
-      <AminaPlate class="col">
-        <TitledPane title="Output" />
-      </AminaPlate>
+      </WidgetPane>
+      <WidgetPane class="col" title="Output"></WidgetPane>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import AminaPlate from 'src/amina_ui/components/UiPlate.vue'
-import TitledPane from 'src/amina_ui/components/TitledPane.vue'
+import WidgetPane from 'src/amina_ui/components/WidgetPane.vue'
 import CommandsListPane from 'src/amina_ui/components/commands/CommandsListPane.vue'
 import RunCommandPane from 'src/amina_ui/components/commands/RunCommandPane.vue'
 

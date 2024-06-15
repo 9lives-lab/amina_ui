@@ -1,14 +1,14 @@
 <template>
-  <TitledPane title="General">
-    <q-list bordered padding>
+  <WidgetPane title="General">
+    <q-list padding>
       <PropertyPane v-for="item of propsList" v-bind:item="item" v-bind:key="item.name" />
     </q-list>
-  </TitledPane>
+  </WidgetPane>
 </template>
 
 <script setup>
 import { ref, getCurrentInstance } from 'vue'
-import TitledPane from 'src/amina_ui/components/TitledPane.vue'
+import WidgetPane from 'src/amina_ui/components/WidgetPane.vue'
 import PropertyPane from 'src/amina_ui/components/settings/PropertyPane.vue'
 
 const aminaApi = getCurrentInstance().appContext.config.globalProperties.$aminaApi
