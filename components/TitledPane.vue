@@ -25,8 +25,8 @@ defineProps({
     justify-content: left
     align-items: center
     padding-left: $amina-default-padding
-    background-color: $amina-title
-    border-color: $separator-dark-color
+    background-color: $amina-primary-color
+    border-color: $amina-separator-color
     border-width: 1px 0 1px 0
     border-style: solid
 

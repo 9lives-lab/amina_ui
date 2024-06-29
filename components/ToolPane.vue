@@ -10,13 +10,13 @@
 
 <style lang="sass">
 .amina-tool-pane
-  background-color: $amina-tool-pane-background-color
+  background-color: $amina-background-primary-color
   border-style: solid
   border-width: 0 0 1px 0
-  border-color: $separator-dark-color
+  border-color: $amina-separator-color
 
   .bg-primary
-    background-color: $amina-tool-pane-background-color !important
+    background-color: $amina-background-primary-color !important
 
   .q-btn
     border-radius: 0px
@@ -27,7 +27,7 @@
   .q-field
     .q-field__inner
       .q-field__control
-        background-color: $amina-tool-pane-background-color
+        background-color: $amina-background-primary-color
         border-radius: 0px
 
   .q-field--outlined .q-field__control::before

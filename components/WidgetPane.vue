@@ -21,10 +21,10 @@ defineProps({
 <style lang="sass" scoped>
 .widget-pane
   overflow: hidden
-  background-color: $plate-dark-background
+  background-color: $amina-background-secondary-color
   background-radius: 8px
   border-radius: 8px
-  border-color: $separator-dark-color
+  border-color: $amina-separator-color
   border-width: 1px
   border-style: solid
   box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 18px
@@ -35,8 +35,8 @@ defineProps({
     justify-content: left
     align-items: center
     padding-left: $amina-default-padding
-    background-color: $amina-title
-    border-color: $separator-dark-color
+    background-color: $amina-primary-color
+    border-color: $amina-separator-color
     border-radius: 8px 8px 0 0
     border-width: 0 0 1px 0
     border-style: solid
