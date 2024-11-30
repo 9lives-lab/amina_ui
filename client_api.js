@@ -10,7 +10,11 @@ eventsApiConnection.onmessage = function (event) {
   const { key, data } = message
 
   if (key in eventHandlers) {
-    eventHandlers[key](data)
+    const handlers = eventHandlers[key]
+    for (const owner in handlers) {
+      const handler = handlers[owner]
+      handler(data)
+    }
   }
 }
 
@@ -25,10 +29,12 @@ export default {
     }
   },
 
-  setEventHandler (key, handler) {
-    eventHandlers[key] = handler
+  setEventHandler (key, owner, handler) {
+    if (!(key in eventHandlers)) {
+      eventHandlers[key] = {}
+    }
+    eventHandlers[key][owner] = handler
   },
-
   async sendRequest (key, inputValue = { value: 0 }) {
     try {
       const url = `${rpcAddress}api/rpc_call?key=${key}`
