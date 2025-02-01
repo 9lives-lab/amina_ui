@@ -35,6 +35,13 @@ export default {
     }
     eventHandlers[key][owner] = handler
   },
+
+  removeEventHandler (key, owner) {
+    if (key in eventHandlers) {
+      delete eventHandlers[key][owner]
+    }
+  },
+
   async sendRequest (key, inputValue = { value: 0 }) {
     try {
       const url = `${rpcAddress}api/rpc_call?key=${key}`

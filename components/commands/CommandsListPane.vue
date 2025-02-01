@@ -21,7 +21,7 @@ async function update () {
   commandsList.value = resp.command_names.map(name => ({ label: name }))
 }
 
-watch(selected, async (newSelected, oldQuestion) => {
+watch(selected, async (newSelected) => {
   emit('commandSelected', newSelected)
 })
 
