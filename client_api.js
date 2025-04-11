@@ -1,53 +1,60 @@
 import axios from 'axios'
 
-const rpcAddress = 'http://localhost:8090/'
-const eventsApiAddress = 'ws://localhost:8090/api/events'
+export class AminaClientAPI {
+  constructor(apiBaseAddr) {
+    this.rpcAddress = 'http://' + apiBaseAddr + '/'
+    this.eventsApiAddress = 'ws://' + apiBaseAddr + '/api/events'
+    
+    console.debug(this.rpcAddress);
+    console.debug(this.eventsApiAddress);
 
-const eventHandlers = {}
-const eventsApiConnection = new WebSocket(eventsApiAddress)
-eventsApiConnection.onmessage = function (event) {
-  const message = JSON.parse(event.data)
-  const { key, data } = message
+    this.eventHandlers = {}
+    this.eventsApiConnection = new WebSocket(this.eventsApiAddress)
+    this.eventsApiConnection.onmessage = this.onMessage.bind(this)
+  }
 
-  if (key in eventHandlers) {
-    const handlers = eventHandlers[key]
-    for (const owner in handlers) {
-      const handler = handlers[owner]
-      handler(data)
+  onMessage(event) {
+    const message = JSON.parse(event.data)
+    const { key, data } = message
+
+    if (key in this.eventHandlers) {
+      const handlers = this.eventHandlers[key]
+      for (const owner in handlers) {
+        const handler = handlers[owner]
+        handler(data)
+      }
     }
   }
-}
 
-export default {
   async sendEvent (key, data) {
     try {
-      const url = `${rpcAddress}api/send_event_from_ui?key=${key}`
+      const url = `${this.rpcAddress}api/send_event_from_ui?key=${key}`
       await axios.post(url, data)
     } catch (error) {
       console.error(error)
       throw error
     }
-  },
+  }
 
   setEventHandler (key, owner, handler) {
-    if (!(key in eventHandlers)) {
-      eventHandlers[key] = {}
+    if (!(key in this.eventHandlers)) {
+      this.eventHandlers[key] = {}
     }
-    eventHandlers[key][owner] = handler
-  },
+    this.eventHandlers[key][owner] = handler
+  }
 
   removeEventHandler (key, owner) {
-    if (key in eventHandlers) {
-      delete eventHandlers[key][owner]
+    if (key in this.eventHandlers) {
+      delete this.eventHandlers[key][owner];
     }
-  },
+  }
 
   async sendRequest (key, inputValue = { value: 0 }) {
     try {
-      const url = `${rpcAddress}api/rpc_call?key=${key}`
+      const url = `${this.rpcAddress}api/rpc_call?key=${key}`
       const response = await axios.post(url, inputValue)
       if (response.data === null) {
-        return
+        return;
       }
 
       if (typeof response.data === 'object') {
@@ -65,11 +72,11 @@ export default {
       console.error(error)
       throw error
     }
-  },
+  }
 
   getFileUrl (keyPath) {
-    return `${rpcAddress}get_file/${keyPath}`
-  },
+    return `${this.rpcAddress}get_file/${keyPath}`
+  }
 
   handleCmd (name, args) {
     const intArgs = {}
@@ -78,11 +85,11 @@ export default {
 
     for (const key in args) {
       const value = args[key]
-      if (typeof (value) === 'string') {
+      if (typeof value === 'string') {
         stringArgs[key] = value
-      } else if (typeof (value) === 'number') {
+      } else if (typeof value === 'number') {
         intArgs[key] = value
-      } else if (typeof (value) === 'boolean') {
+      } else if (typeof value === 'boolean') {
         boolArgs[key] = value
       }
     }
